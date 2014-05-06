@@ -37,7 +37,7 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-@app.route('/')
+@app.route('/zaldreport')
 @requires_auth
 def home():
     reports = []
