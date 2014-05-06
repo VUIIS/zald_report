@@ -1,9 +1,6 @@
 import sys
 from redcap import Project
 
-API_URL='https://redcap.vanderbilt.edu/api/'
-API_KEY_ZALD_TTS='5AF37B80538F8839EEEDFCE40ACF100B' 
-
 DEFAULT_COLUMNS=['dtiQA_v2','fMRIQA','FS','FSL_First','Multi_Atlas','TRACULA','VBMQA']
 
 ########################################################
@@ -16,6 +13,8 @@ def get_data():
     return dict_from_csv(csv_from_redcap())
 
 def csv_from_redcap():
+    API_URL = os.environ['API_URL']
+    API_KEY_ZALD_TTS = os.environ['KEY_ZALD']
     rc_fields=['record_id','experiment_xnat','scan_xnat','scan_sd_xnat','process_name_xnat','quality_control_complete']
     p = Project(API_URL, API_KEY_ZALD_TTS)
     return p.export_records(fields=rc_fields,format='csv')
