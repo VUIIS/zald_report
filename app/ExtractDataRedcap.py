@@ -1,4 +1,4 @@
-import sys
+import sys,os
 from redcap import Project
 
 DEFAULT_COLUMNS=['dtiQA_v2','fMRIQA','FS','FSL_First','Multi_Atlas','TRACULA','VBMQA']
