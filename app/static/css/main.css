@@ -72,6 +72,14 @@ h3 {
     text-align: center;
 }
 
+/*
+ *  Authentification
+ */
+#textfield{
+	margin-righ:auto;
+	margin-left:auto;
+}
+
 /* 
  *	LEGEND TABLE: 
  */
@@ -169,6 +177,22 @@ h3 {
     background-color: grey;
     color:black;
 }
+
+/*
+ * COUNT table
+ */
+.Counttable {
+    border-collapse: collapse;
+    height:40px;
+}
+
+.Counttable th,td{
+	min-width:100px;
+	max-width:100px;
+ 	border: 1px solid black;
+ 	overflow-x:scroll;
+}
+
 
 /*  
  *	ScrollBar 
