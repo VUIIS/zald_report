@@ -14,9 +14,9 @@ def get_data(KEY):
 
 def csv_from_redcap(KEY):
     API_URL = os.environ['API_URL']
-    API_KEY_ZALD_TTS = os.environ[KEY]
+    API_KEY= os.environ[KEY]
     rc_fields=['record_id','experiment_xnat','scan_xnat','scan_sd_xnat','process_name_xnat','quality_control_complete']
-    p = Project(API_URL, API_KEY_ZALD_TTS)
+    p = Project(API_URL, API_KEY)
     return p.export_records(fields=rc_fields,format='csv')
 
 def dict_from_csv(csvString):
@@ -50,45 +50,74 @@ def sort_list(list_tuplet,proc):
 #   Get Html code for the page using data from REDCap  #
 ########################################################
 def html_from_dict(data,project):
-    #first level:
-    html_main='<div class="mainContainer">\n'
+    #Number of Sessions:
+    html_main='<h4>Project: '+project+ ' -- Number of Sessions: '+str(len(data.keys()))+'</h4>\n'
+    #legend:
+    html_main+=html_legend_table()
+    #Main table
+    html_main+='<div class="mainContainer">\n'
     html_main+=html_table(data,project)
     html_main+='</div>\n'
-    html_main+='<div>\n'
+    #Count table
+    html_main+='<div Style="clear:both"></div>\n'
+    html_main+='<div id="footer">\n'
     html_main+=html_div_count(data)
     html_main+='</div>\n'
     return html_main
+
+def html_legend_table():
+    html_legend='<table class="legend">\n'
+    html_legend+='<tr>\n'
+    html_legend+='<td text-align="center" id="failed">Failed</td>\n'
+    html_legend+='<td text-align="center" id="unverified">Unverified</td>\n'
+    html_legend+='<td text-align="center" id="passed">Passed</td>\n'
+    html_legend+='<td text-align="center" id="nodata">No data</td>\n'
+    html_legend+='</tr>\n'
+    html_legend+='</table>\n<br>'
+    return html_legend
     
 def html_table(data,project):
     #table
     html_table='<table class="Maintable">\n'
-    if project=='ZALD_TTS':
-        #header
-        html_table+=html_table_header_ZALD()
-        #body
-        html_table+=html_table_body_ZALD(data)
-    else:
-        #header
-        html_table+=html_table_header()
-        #body
-        html_table+=html_table_body(data)
+    #header
+    html_table+=html_table_header()
+    #body
+    html_table+=html_table_body(data,project)
     #close table
     html_table+='</table>\n'
     return html_table
 
 def html_div_count(data):
-    html_div_count='<table class="Counttable">\n'
-    html_div_count='<tr>\n'
-    html_div_count='<th>Passed Total</th>\n'
+    html_div_count='<br><table class="Counttable">\n'
+    html_div_count+='<tr>\n'
+    #Total count
+    html_div_count+='<td id="defaultcolumn">Total</th>\n'
     for h in DEFAULT_COLUMNS:
-        idname='defaultcolumn'
-        if h=='fMRIQA':
-            idname='fmriqacolumn'
+        Proc_List=get_proc_list(data,h)
+        html_div_count+='<td id="count">'+str(len(Proc_List))+'</th>\n'
+    html_div_count+='</tr><tr>\n'
+    #PAssed
+    html_div_count+='<td width="100px" id="passed" >Passed</th>\n'
+    for h in DEFAULT_COLUMNS:
         Proc_List=get_proc_list(data,h)
         nb_passed=[proc for proc in Proc_List if proc[1]=='2']
-        html_div_count+='<th id="'+idname+'">'+str(len(nb_passed))+'</th>\n'
+        html_div_count+='<td id="count">'+str(len(nb_passed))+'</th>\n'
+    html_div_count+='</tr><tr>\n'
+    #Failed
+    html_div_count+='<td width="100px" id="failed">Failed</th>\n'
+    for h in DEFAULT_COLUMNS:
+        Proc_List=get_proc_list(data,h)
+        nb_passed=[proc for proc in Proc_List if proc[1]=='0']
+        html_div_count+='<td id="count">'+str(len(nb_passed))+'</th>\n'
+    html_div_count+='</tr><tr>\n'
+    #Unverified
+    html_div_count+='<td width="100px" id="unverified">Unverified</th>\n'
+    for h in DEFAULT_COLUMNS:
+        Proc_List=get_proc_list(data,h)
+        nb_passed=[proc for proc in Proc_List if proc[1]=='1']
+        html_div_count+='<td id="count">'+str(len(nb_passed))+'</th>\n'
     html_div_count+='</tr>\n'
-    html_div_count+='</table>\n'
+    html_div_count+='</table><br>\n'
     return html_div_count
 
 def get_proc_list(data,h):
@@ -105,57 +134,6 @@ def html_table_header():
     #first column: Session
     html_header+='<th>Session</th>\n'
     #Add each column
-    for h in DEFAULT_COLUMNS:        
-        html_header+='<th id="defaultcolumn">' + h + '</th>\n'
-    html_header+='</tr>\n'
-    html_header+='</thead>\n'
-    return html_header
-    
-def html_table_body(data):
-    html_body='<tbody>\n'
-    for session in sorted(data.iterkeys()):
-        html_body+='<tr>\n'
-        #add the session as first column
-        html_body+='<td><div class="processcolumn">' + session + '</div></td>\n'
-        for h in DEFAULT_COLUMNS:
-            html_body+='<td id="defaultcolumn">'
-            if h in data[session].keys():
-                html_body+=html_table_cell_ZALD(data[session][h],h)
-            else:
-                html_body+=html_table_cell_ZALD(None,h)
-            html_body+='</td>\n'
-        html_body+='</tr>\n'
-    html_body+='</tbody>\n'
-    return html_body
-
-def html_table_cell(list_tuplet,proc):
-    html_cell='<div class="processcolumn">\n'
-    if not list_tuplet:
-        html_cell+=html_div_cell_no_data(' -- ')
-    else:
-        sorted_tuplet=sort_list(list_tuplet,proc)
-        for scan_qa in sorted_tuplet:
-            #get value of scan if one
-            if scan_qa[0]=='_' or scan_qa[0]=='':
-                scan=' -- '
-            else:
-                scan=scan_qa[0]
-            #Add the value to table
-            if scan_qa[1]=='0':
-                html_cell+=html_div_cell_failed(scan)
-            elif scan_qa[1]=='1':
-                html_cell+=html_div_cell_unverified(scan)
-            elif scan_qa[1]=='2':
-                html_cell+=html_div_cell_passed(scan)
-    html_cell+='</div>\n'
-    return html_cell
-
-############### SPECIFIC FOR ZALD (big fMRIQA column) ############### 
-def html_table_header_ZALD():
-    html_header='<thead>\n<tr>\n'
-    #first column: Session
-    html_header+='<th>Session</th>\n'
-    #Add each column
     for h in DEFAULT_COLUMNS:
         idname='defaultcolumn'
         if h=='fMRIQA':
@@ -165,7 +143,7 @@ def html_table_header_ZALD():
     html_header+='</thead>\n'
     return html_header
     
-def html_table_body_ZALD(data):
+def html_table_body(data,project):
     html_body='<tbody>\n'
     for session in sorted(data.iterkeys()):
         html_body+='<tr>\n'
@@ -177,20 +155,23 @@ def html_table_body_ZALD(data):
                 idname='fmriqacolumn'
             html_body+='<td id="'+idname+'">'
             if h in data[session].keys():
-                html_body+=html_table_cell_ZALD(data[session][h],h)
+                html_body+=html_table_cell(data[session][h],h,project)
             else:
-                html_body+=html_table_cell_ZALD(None,h)
+                html_body+=html_table_cell(None,h,project)
             html_body+='</td>\n'
         html_body+='</tr>\n'
     html_body+='</tbody>\n'
     return html_body
 
-def html_table_cell_ZALD(list_tuplet,proc):
+def html_table_cell(list_tuplet,proc,project):
     html_cell='<div class="processcolumn">\n'
     if not list_tuplet:
         html_cell+=html_div_cell_no_data(' -- ')
     else:
-        sorted_tuplet=sort_list_ZALD(list_tuplet,proc)
+        if project=='ZALD_TTS':
+            sorted_tuplet=sort_list_ZALD(list_tuplet,proc)
+        else:
+            sorted_tuplet=sort_list(list_tuplet,proc)
         for scan_qa in sorted_tuplet:
             #get value of scan if one
             if scan_qa[0]=='_' or scan_qa[0]=='':

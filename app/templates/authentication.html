@@ -12,13 +12,22 @@
 	   </header>
    <body>
 	    <div class="container">
-		    <h2>Authentification:</h2>
+		    <h2>Authentication:</h2>
+		    <div align=center>
 		    <form action="." method="POST">
-		        Project: <input id="textfield" type="text" name="Project"><br>
+		    	Project:
+				<select name="Project">
+				<option value=""></option>
+				<option value="BLSA">BLSA</option>
+				<option value="VUSTP">VUSTP</option>
+				<option value="ZALD_TTS">ZALD_TTS</option>
+				</select><br>
+		        
 		        Username: <input id="textfield" type="text" name="Username"><br>
 		        Password: <input id="textfield" type="password" name="Password"><br>
-		        <input type="submit" name="authentification" value="Send">
+		        <input type="submit" name="authentication" value="Login">
 		    </form>
+		    </div>
 	    </div>
    </body>
 </html>

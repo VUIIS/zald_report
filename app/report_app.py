@@ -15,10 +15,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def my_form():
-    return render_template("authentification.html")
+    return render_template("authentication.html")
 
 @app.route('/', methods=['POST'])
-def authentification():
+def authentication():
     import os
     project = request.form['Project']
     username = request.form['Username']
