@@ -90,32 +90,37 @@ def html_table(data,project):
 def html_div_count(data):
     html_div_count='<br><table class="Counttable">\n'
     html_div_count+='<tr>\n'
+    #Header:
+    html_div_count+='<th id="defaultcolumn"></th>\n'
+    for h in DEFAULT_COLUMNS:
+        html_div_count+='<th id="defaultcolumn">'+h+'</th>\n'
+    html_div_count+='</tr><tr>\n'
+    #PAssed
+    html_div_count+='<td id="passed" >Passed</th>\n'
+    for h in DEFAULT_COLUMNS:
+        Proc_List=get_proc_list(data,h)
+        nb_passed=[proc for proc in Proc_List if proc[1]=='2']
+        html_div_count+='<td>'+str(len(nb_passed))+'</th>\n'
+    html_div_count+='</tr><tr>\n'
+    #Failed
+    html_div_count+='<td id="failed">Failed</th>\n'
+    for h in DEFAULT_COLUMNS:
+        Proc_List=get_proc_list(data,h)
+        nb_passed=[proc for proc in Proc_List if proc[1]=='0']
+        html_div_count+='<td>'+str(len(nb_passed))+'</th>\n'
+    html_div_count+='</tr><tr>\n'
+    #Unverified
+    html_div_count+='<td id="unverified">Unverified</th>\n'
+    for h in DEFAULT_COLUMNS:
+        Proc_List=get_proc_list(data,h)
+        nb_passed=[proc for proc in Proc_List if proc[1]=='1']
+        html_div_count+='<td>'+str(len(nb_passed))+'</th>\n'
+    html_div_count+='</tr><tr>\n'
     #Total count
     html_div_count+='<td id="defaultcolumn">Total</th>\n'
     for h in DEFAULT_COLUMNS:
         Proc_List=get_proc_list(data,h)
-        html_div_count+='<td id="count">'+str(len(Proc_List))+'</th>\n'
-    html_div_count+='</tr><tr>\n'
-    #PAssed
-    html_div_count+='<td width="100px" id="passed" >Passed</th>\n'
-    for h in DEFAULT_COLUMNS:
-        Proc_List=get_proc_list(data,h)
-        nb_passed=[proc for proc in Proc_List if proc[1]=='2']
-        html_div_count+='<td id="count">'+str(len(nb_passed))+'</th>\n'
-    html_div_count+='</tr><tr>\n'
-    #Failed
-    html_div_count+='<td width="100px" id="failed">Failed</th>\n'
-    for h in DEFAULT_COLUMNS:
-        Proc_List=get_proc_list(data,h)
-        nb_passed=[proc for proc in Proc_List if proc[1]=='0']
-        html_div_count+='<td id="count">'+str(len(nb_passed))+'</th>\n'
-    html_div_count+='</tr><tr>\n'
-    #Unverified
-    html_div_count+='<td width="100px" id="unverified">Unverified</th>\n'
-    for h in DEFAULT_COLUMNS:
-        Proc_List=get_proc_list(data,h)
-        nb_passed=[proc for proc in Proc_List if proc[1]=='1']
-        html_div_count+='<td id="count">'+str(len(nb_passed))+'</th>\n'
+        html_div_count+='<td>'+str(len(Proc_List))+'</th>\n'
     html_div_count+='</tr>\n'
     html_div_count+='</table><br>\n'
     return html_div_count

@@ -199,13 +199,8 @@ h4 {
 .Counttable th,td{
  	border: 1px solid black;
  	overflow-x:scroll;
+ 	text-align:center;
 }
-
-#count{
-	width:40px;
-	max-width:40px;
-}
-
 #footer {
      position: relative;
 }

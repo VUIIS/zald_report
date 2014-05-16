@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>VUIIS Quality Assurance Report</title>
-    <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>    
-  </head>
-  <body>
-   
-    <header>
-      <div class="container">
-        <h1 class="logo">VUIIS Quality Assurance Report</h1>
-      </div>
-    </header> 
-  </body>
-  <body>
-  	<div class="container">
-		    <br><h3>ERROR: The Authentication failed. You entered the wrong login.</h3>
-		    <br><div align="center"><a href="{{ url_for('authentication') }}")>Back to Authentication</a></div>
+{% extends "layout.html" %}
+{% block content %}
+	<div class="container">
+	    <br><h3>ERROR: The Authentication failed. You entered the wrong login.</h3>
+	    <br><div align="center"><a href="{{ url_for('authentication') }}")>Back to Authentication</a></div>
 	</div>
-  </body>
-</html>
+{% endblock %}
