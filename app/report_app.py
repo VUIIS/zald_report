@@ -13,11 +13,11 @@ import ExtractDataRedcap
  
 app = Flask(__name__)  
 
-@app.route('/')
+@app.route('/qareport')
 def my_form():
     return render_template("authentication.html")
 
-@app.route('/', methods=['POST'])
+@app.route('/qareport', methods=['POST'])
 def authentication():
     import os
     project = request.form['Project']
