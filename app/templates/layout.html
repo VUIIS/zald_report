@@ -2,7 +2,229 @@
 <html>
   <head>
     <title>VUIIS CCI Quality Assurance Report</title>
-    <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>    
+    <!--     <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>    -->
+	<style>
+	 /* Regular report form */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #444;
+    }
+     
+    /*
+     * Create dark grey header with a white logo
+     */
+      
+    header {
+      background-color: #2B2B2B;
+      height: 35px;
+      width: 100%;
+      opacity: .9;
+      margin-bottom: 10px;
+    }
+     
+    header h1.logo {
+      margin: 0;
+      font-size: 1.7em;
+      color: #fff;
+      text-transform: uppercase;
+      float: left;
+    }
+     
+    header h1.logo:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+     
+    /*
+     * Center the body content
+     */
+      
+    .container{
+      width: 90%;
+      margin: 0 auto;
+    }
+     
+    div.jumbo {
+      padding: 10px 0 30px 0;
+      background-color: #eeeeee;
+      -webkit-border-radius: 6px;
+         -moz-border-radius: 6px;
+              border-radius: 6px;
+    }
+     
+    h2 {
+      font-size: 3em;
+      margin-top: 40px;
+      text-align: center;
+      letter-spacing: -2px;
+    }
+     
+    h3 {
+    	font-family: Georgia, "Times New Roman", Times, serif;
+    	font-size:24px;
+    	margin-top: 5px; margin-bottom: 0px;
+    	text-align: center;
+    	font-weight: normal;
+    	color: #222;
+    }
+    
+    h4 {
+      font-size: 1em;
+      font-weight: 100;
+      text-align: left;
+      letter-spacing: 0px;
+      color: black;
+    }
+    
+    .report-title {
+        width: 100%;
+    }
+    
+    .centered {
+        text-align: center;
+    }
+    
+    /*
+     *  Authentification
+     */
+    #textfield{
+    	margin-righ:auto;
+    	margin-left:auto;
+    }
+    
+    /* 
+     *	LEGEND TABLE: 
+     */
+    .legend{
+     	width:200px;
+     	heigh:30px;
+     	border: 1px ridge black;
+     	text-align:center;
+    }
+    
+    /* 
+     *	MAIN DIV 
+     */
+    .mainContainer{
+    	margin-right:auto;
+        margin-left:auto;
+        width:100%;
+    }
+    
+    /* 
+     *	TABLE 
+     */
+    .Maintable {
+        border-collapse: collapse;
+    }
+    
+    .Maintable th,td{
+    	min-width:100px;
+    	max-width:100px;
+     	border: 1px solid black;
+     	overflow-x:scroll;
+    }
+    
+    .Maintable thead
+    {
+    	border: 1px solid black;
+        display: block;
+    }
+    .Maintable tbody 
+    {
+    	border: 1px solid black;
+    	display: block;
+       	overflow: auto;
+      	height: 450px;
+    }
+    
+    /* IDs: Witdh size for each column */
+    #fmriqacolumn{
+    	width:400px;
+    	max-width:400px;
+    }
+    #defaultcolumn{
+    	width:100px;
+    }
+    
+    /* 
+     *	Column DIV 
+     */
+    .processcolumn{
+    	display: table;
+    	border-collapse: separate;
+    	width:100%;
+    	height:30px;
+    	text-align:center;
+    	overflow-x:scroll;
+    }
+    
+    /* 
+     *	Cell DIV 
+     */
+    .processcell{
+    	border:1px solid black;
+    	height:25px;
+    	width:25px;
+    	display:table-cell;
+    	align:center;
+    	text-align:center;
+    	border-radius: 50%;
+    	overflow:hidden;
+    }
+    /* IDs: Color style for each cell */
+    #passed{
+        background-color: green;
+        color:black;
+    }
+    #failed{
+        background-color: red;
+        color:black;
+    }
+    #unverified{
+        background-color: yellow;
+        color:black;
+    }
+    #nodata{
+        background-color: grey;
+        color:black;
+    }
+    
+    /*
+     * COUNT table
+     */
+    .Counttable {
+    	border:1px solid black;
+        border-collapse: collapse;
+        height:40px;
+        witdh:100%;
+    }
+    
+    .Counttable th,td{
+     	border: 1px solid black;
+     	overflow-x:scroll;
+     	text-align:center;
+    }
+    #footer {
+         position: relative;
+    }
+    
+    /*  
+     *	ScrollBar 
+     */
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 0.5em;
+        height: 0.5em;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,.5);
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    }
+
+	</style> 
   </head>
   <body>
    
