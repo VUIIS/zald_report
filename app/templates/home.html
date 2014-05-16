@@ -1,18 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-
+  
 {% for name, table in reports %}
-<h4 class="report-title centered">{{name}}</h4>
-<table class="legend">
-	<tr>
-		<td text-align="center" id="failed">Failed</td>
-		<td text-align="center" id="unverified">Unverified</td>
-		<td text-align="center" id="passed">Passed</td>
-		<td text-align="center" id="nodata">No data</td>
-	</tr>
-</table>
-
-<br><br>
+<h3 class="report-title centered">{{name}}</h3>
 
 {{table}}
 {% endfor %}

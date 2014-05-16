@@ -56,12 +56,20 @@ h2 {
 }
  
 h3 {
-  font-size: 1.7em;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size:24px;
+	margin-top: 5px; margin-bottom: 0px;
+	text-align: center;
+	font-weight: normal;
+	color: #222;
+}
+
+h4 {
+  font-size: 1em;
   font-weight: 100;
-  margin-top: 30px;
-  text-align: center;
-  letter-spacing: -1px;
-  color: #999;
+  text-align: left;
+  letter-spacing: 0px;
+  color: black;
 }
 
 .report-title {
@@ -70,6 +78,14 @@ h3 {
 
 .centered {
     text-align: center;
+}
+
+/*
+ *  Authentification
+ */
+#textfield{
+	margin-righ:auto;
+	margin-left:auto;
 }
 
 /* 
@@ -168,6 +184,25 @@ h3 {
 #nodata{
     background-color: grey;
     color:black;
+}
+
+/*
+ * COUNT table
+ */
+.Counttable {
+	border:1px solid black;
+    border-collapse: collapse;
+    height:40px;
+    witdh:100%;
+}
+
+.Counttable th,td{
+ 	border: 1px solid black;
+ 	overflow-x:scroll;
+ 	text-align:center;
+}
+#footer {
+     position: relative;
 }
 
 /*  
