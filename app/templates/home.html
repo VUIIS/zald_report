@@ -1,9 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-  
-{% for name, table in reports %}
-<h3 class="report-title centered">{{name}}</h3>
-
-{{table}}
-{% endfor %}
+	 <div class="container">
+	  <h2>Welcome to the Main Page for VUIIS CCI Quality Assurance Report</h2>
+	  <h3>This Web app has been developped by the masilab at Vanderbilt University, Nashville, TN.</h3>
+	  <br>
+	  <h4>You can sign in with your login to load your report or you can add your project to the list if your project is not in the database. The project on REDCap needs to follow the MasiLab template with REDCap.</h4>
+      <h4>After signing in, please be patient while the application is loading the content. It might take some time.</h4>
+      <h4><u>Contact information:</u> benjamin.c.yvernault@vanderbilt.edu </h4>
+      <h4><u>VUIIS CCI Links:</u></h4>
+	  <a href="http://xnat.vanderbilt.edu/index.php/Main_Page">Vanderbilt XNAT Main Wiki</a><br>
+	  <a href="http://xnat.vanderbilt.edu/report">Vanderbilt XNAT Report</a><br>
+	  <a href="http://vandyxnat.org/xnat/">Vanderbilt XNAT</a><br>
+	  <a href="https://redcap.vanderbilt.edu">REDCap</a><br>
+	  <a href="https://masi.vuse.vanderbilt.edu/index.php/Main_Page">MasiLab</a><br>
+	  </div>
+	 </div>
 {% endblock %}
