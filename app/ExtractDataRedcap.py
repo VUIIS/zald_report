@@ -1,4 +1,4 @@
-import sys,os
+import sys,os,json
 from redcap import Project
 
 DEFAULT_COLUMNS=['dtiQA_v2','fMRIQA','FS','FSL_First','Multi_Atlas','TRACULA','VBMQA']
@@ -6,29 +6,37 @@ DEFAULT_COLUMNS=['dtiQA_v2','fMRIQA','FS','FSL_First','Multi_Atlas','TRACULA','V
 ########################################################
 #                  Get Data from REDCap                #
 ########################################################
-def get_data(KEY):
+def get_data(project):
     """Top-level function.Use to get a DataFrame from the redcap project
-
     Callers **should** catch errors"""
-    return dict_from_csv(csv_from_redcap(KEY))
+    
+    return dict_from_csv(csv_from_redcap(project),project)
 
-def csv_from_redcap(KEY):
+def check_key(key):
+    try:
+        p = Project(os.environ['API_URL'], key)
+        response = project.def_field
+        return True
+    except KeyError:
+        return False
+
+def csv_from_redcap(project):
     API_URL = os.environ['API_URL']
-    API_KEY= os.environ[KEY]
-    rc_fields=['record_id','experiment_xnat','scan_xnat','scan_sd_xnat','process_name_xnat','quality_control_complete']
-    p = Project(API_URL, API_KEY)
+    info = json.load(open(os.environ['REPORT_CONFIG']))
+    rc_fields=['record_id','project_xnat','experiment_xnat','scan_xnat','scan_sd_xnat','process_name_xnat',info[project]['main']+'_complete']
+    p = Project(API_URL, info[project]['key'])
     return p.export_records(fields=rc_fields,format='csv')
 
-def dict_from_csv(csvString):
+def dict_from_csv(csvString,project):
     data=dict()
     for index,line in enumerate(csvString.split('\n')):
         labels=map(lambda x: x.strip('"'),line.split(','))
-        if len(labels)>1:
-            d=data.get(labels[1],{})
-            d2=d.get(labels[4],[])
-            d2.append((labels[2]+'_'+labels[3],labels[-1]))
-            d[labels[4]]=d2
-            data[labels[1]]=d
+        if len(labels)>1 and labels[1]==project:
+            d=data.get(labels[2],{})
+            d2=d.get(labels[5],[])
+            d2.append((labels[3]+'_'+labels[4],labels[-1]))
+            d[labels[5]]=d2
+            data[labels[2]]=d
     #remove two lines that should not be there (header,if session is NULL)
     data.pop('',None)
     data.pop('experiment_xnat',None)
