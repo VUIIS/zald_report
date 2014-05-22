@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+ 
+{% block content %}
+  <h2>Sign up</h2>
+ 
+  {% for message in form.username.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  {% for message in form.password.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  {% for message in form.key.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  {% for message in form.main.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  <form action="{{ url_for('signup') }}" method=post>
+    {{ form.hidden_tag() }}
+     
+    {{ form.username.label }}
+    {{ form.username }}
+     
+    {{ form.password.label }}
+    {{ form.password }}
+     
+    {{ form.key.label }}
+    {{ form.key }}
+     
+    {{ form.main.label }}
+    {{ form.main }}
+     
+    {{ form.submit }}
+  </form>
+  
+  <h4>Main Instrument is your first instrument name in your REDCap project. It contents all the information about Xnat and the record ID. It also provides the quality status for your processes.</h4>
+  <h4>To know the variables and their name for this main instrument, check: <a href="http://xnat.vanderbilt.edu/index.php/Everything_about_Spiders#How_to_upload_on_Redcap_from_XNAT">VUIIS CCI and REDCap</a>.</h4>  
+{% endblock %}
