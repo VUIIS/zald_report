@@ -8,7 +8,7 @@ class SignupForm(Form):
     username = TextField("Username (Project ID)",  [Required("Please enter your project name / username (same variable).")])
     password = PasswordField("Password",  [Required("Please enter your password.")])
     key = PasswordField("Api Key",  [Required("Please enter your api key for REDCap.")])
-    main = TextField('Main Library', [Required("Please enter a main library name on REDCap.")])
+    main = TextField('Main Instrument', [Required("Please enter your main instrument name on REDCap (Instrument containing XNAT information).")])
     submit = SubmitField("Add project")
     
     def __init__(self, *args, **kwargs):
