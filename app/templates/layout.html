@@ -338,13 +338,13 @@
         <h1 class="logo">VUIIS CCI Quality Assurance Report</h1>
         <nav>
         <ul class="menu">
-          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="/qareport{{ url_for('home') }}">Home</a></li>
           {% if 'username' in session %}
-          <li><a href="{{ url_for('report',projects=session['username']) }}">Report</a></li>
-          <li><a href="{{ url_for('signout') }}">Sign Out</a></li>
+          <li><a href="/qareport{{ url_for('report',projects=session['username']) }}">Report</a></li>
+          <li><a href="/qareport{{ url_for('signout') }}">Sign Out</a></li>
           {% else %}
-          <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
-          <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+          <li><a href="/qareport{{ url_for('signup') }}">Sign Up</a></li>
+          <li><a href="/qareport{{ url_for('signin') }}">Sign In</a></li>
           {% endif %}
         </ul>
       </nav>
